@@ -38,7 +38,7 @@ class _GameScreenState extends State<GameScreen> {
             appBar: CustomAppBar(
               title: Text(
                 "Minesweeper",
-                style: TextStyle(fontWeight: FontWeight.w300, fontSize: 22),
+                style: TextStyle(fontWeight: FontWeight.w300, fontSize: 22,color: Colors.white),
               ),
               actions: ActionList(
                 state.gameSave,

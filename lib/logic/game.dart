@@ -13,7 +13,7 @@ class Game {
   void handleClick(int x, int y, {bool isFlag = false}) {
     if (_checkOutOfGrid(x, y)) return;
 
-    final block = field.grid[y][x];
+    final block = field.grid[x][y];
     if (block.state == BlockState.revealed) return;
 
     if (isFlag) {

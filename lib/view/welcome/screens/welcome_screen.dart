@@ -24,72 +24,106 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         if (state.status == SaveLoadStatus.emptyData) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text("No saved games yet!")));
+          ).showSnackBar(const SnackBar(content: Text("No saved games yet!")));
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          appBar: CustomAppBar(
-            title: const Text(
-              "Welcome",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
+        return Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                'assets/images/background_image.png',
+                fit: BoxFit.fill,
               ),
             ),
-          ),
-          body: Padding(
-            padding: EdgeInsets.all(24),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CustomElevatedButton(
-                    child: const Text(
-                      "New Game",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 24),
-                    ),
-                    onPress: () {
-                      final cubit = context.read<GameCubit>();
-                      cubit.resetGame(
-                        cubit.gameSave!.gameList.games.first.game.field.config,
-                        cubit.gameSave!.gameList.games.first.mode,
-                      );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FieldConfigScreen(),
-                        ),
-                      );
-                    },
+            Scaffold(backgroundColor: Colors.transparent,
+              appBar: CustomAppBar(
+                title: const Text(
+                  "Welcome",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
                   ),
-                  SizedBox(height: 12),
-                  state.status == SaveLoadStatus.loading
-                      ? CircularProgressIndicator()
-                      : CustomElevatedButton(
-                        child: const Text(
-                          "Load Game",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white, fontSize: 24),
-                        ),
-                        onPress: () {
-                          saveCubit.fetchGames();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoadScreen(),
+                ),
+              ),
+              body: Stack(
+                children: [
+                  // Positioned.fill(
+                  //   child: Image.asset(
+                  //     'assets/images/background_image.png',
+                  //     fit: BoxFit.fill,
+                  //   ),
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          CustomElevatedButton(
+                            child: const Text(
+                              "New Game",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          );
-                        },
+                            onPress: () {
+                              final cubit = context.read<GameCubit>();
+                              cubit.resetGame(
+                                cubit
+                                    .gameSave!
+                                    .gameList
+                                    .games
+                                    .first
+                                    .game
+                                    .field
+                                    .config,
+                                cubit.gameSave!.gameList.games.first.mode,
+                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => const FieldConfigScreen(),
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 20),
+                          state.status == SaveLoadStatus.loading
+                              ? const CircularProgressIndicator()
+                              : CustomElevatedButton(
+                                child: const Text(
+                                  "Load Game",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPress: () {
+                                  saveCubit.fetchGames();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoadScreen(),
+                                    ),
+                                  );
+                                },
+                              ),
+                        ],
                       ),
+                    ),
+                  ),
                 ],
               ),
             ),
-          ),
+          ],
         );
       },
     );

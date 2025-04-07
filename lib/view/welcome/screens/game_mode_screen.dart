@@ -28,23 +28,25 @@ class _GameModeScreenState extends State<GameModeScreen> {
         final cubit = context.read<GameCubit>();
         late GameMode gameMode = GameMode.singlePlayer;
         return Scaffold(
-          appBar: CustomAppBar(title: const Text('Choose Game Mode')),
+          appBar: CustomAppBar(title: const Text('Choose Game Mode',style: TextStyle(color: Colors.white),)),
           body: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
               children: [
-                ...modes.map(
-                      (mode) => ModeCard(
+                for (final mode in modes)
+                  ModeCard(
                     title: mode.title,
                     subtitle: mode.subtitle,
                     icon: mode.iconData,
-                    isSelected: state
-                        .gameSave
-                        .gameList
-                        .games[state.gameSave.gameList.currentIndex]
-                        .mode ==
+                    isSelected:
+                        state
+                            .gameSave
+                            .gameList
+                            .games[state.gameSave.gameList.currentIndex]
+                            .mode ==
                         mode.gameMode,
-                    isEnabled: mode.gameMode == GameMode.singlePlayer, // Disable other modes
+                    isEnabled: mode.gameMode == GameMode.singlePlayer,
+                    // Disable other modes
                     onTap: () {
                       setState(() {
                         gameMode = mode.gameMode;
@@ -53,7 +55,7 @@ class _GameModeScreenState extends State<GameModeScreen> {
                       print(gameMode.toString());
                     },
                   ),
-                ),
+
                 const SizedBox(height: 32),
                 CustomElevatedButton(
                   onPress: () {
@@ -61,7 +63,10 @@ class _GameModeScreenState extends State<GameModeScreen> {
                     initialGame.gameList.games.first.game.field.printField(
                       revealMines: true,
                     );
-                    cubit.resetGame(widget.config, state.gameSave.gameList.games.first.mode);
+                    cubit.resetGame(
+                      widget.config,
+                      state.gameSave.gameList.games.first.mode,
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(

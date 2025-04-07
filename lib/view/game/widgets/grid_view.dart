@@ -53,7 +53,7 @@ class _GridState extends State<Grid> {
 
         return InkWell(
           onTap: () async {
-            cubit.handleClick(col, row,widget.gameIndex);
+            cubit.handleClick(row, col,widget.gameIndex);
             await _playSound("assets/sounds/click_sound.mp3");
           },
           onLongPress: () async {

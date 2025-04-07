@@ -44,7 +44,7 @@ class _CustomFieldConfigScreenState extends State<CustomFieldConfigScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: const Text("Custom Configuration")),
+      appBar: CustomAppBar(title: const Text("Custom Configuration",style: TextStyle(color: Colors.white),)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

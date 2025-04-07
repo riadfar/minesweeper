@@ -96,8 +96,8 @@ class Field {
     }
   }
 
-  /// for memento
-  ///
+  /// FOR MEMENTO
+
   Field copy() => Field._copy(this);
 
   Field._copy(Field original) : config = original.config.copy() {
@@ -107,14 +107,11 @@ class Field {
             .toList();
   }
 
-  /// for save and load the game
+  /// FOR SAVE THE GAME
 
   Map<String, dynamic> toJson() => {
-    "grid": grid
-        .map((row) => row
-        .map((block) => block.toJson()) // This produces Iterable<Map>
-        .toList()) // Convert inner Iterable to List<Map>
-        .toList(), // Convert outer Iterable to List<List<Map>>
+    "grid":
+        grid.map((row) => row.map((block) => block.toJson()).toList()).toList(),
     "field_config": config.toJson(),
   };
 

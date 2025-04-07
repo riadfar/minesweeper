@@ -36,13 +36,13 @@ class _FieldConfigScreenState extends State<FieldConfigScreen> {
         );
 
         return Scaffold(
-          appBar: CustomAppBar(title: const Text("Choose Field Size")),
+          appBar: CustomAppBar(title: const Text("Choose Field Size",style: TextStyle(color: Colors.white),)),
           body: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
               children: [
-                ...defaultConfigs.map(
-                  (config) => ConfigCard(
+                for (var config in defaultConfigs)
+                  ConfigCard(
                     title: config.difficulty!,
                     subtitle:
                         '${config.width}x${config.height} - ${config.minesCount} mines',
@@ -60,7 +60,6 @@ class _FieldConfigScreenState extends State<FieldConfigScreen> {
                       cubit.setFieldConfig(config);
                     }, // Use cubit instead of callback
                   ),
-                ),
                 CustomConfigWidget(cubit: cubit),
                 CustomElevatedButton(
                   child: const Text("Next"),

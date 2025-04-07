@@ -23,7 +23,7 @@ class _LoadScreenState extends State<LoadScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: Text('Load Game')),
+      appBar: CustomAppBar(title: Text('Load Game',style: TextStyle(color: Colors.white),)),
       body: BlocBuilder<SaveLoadCubit, SaveLoadState>(
         builder: (context, state) {
           if (state.status == SaveLoadStatus.loaded) {

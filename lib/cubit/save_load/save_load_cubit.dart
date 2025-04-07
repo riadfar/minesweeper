@@ -71,7 +71,7 @@ class SaveLoadCubit extends Cubit<SaveLoadState> {
     } catch (e) {
       _errorHandler("update game", e);
     }
-      emit(state.copyWith(status: SaveLoadStatus.loaded));
+    emit(state.copyWith(status: SaveLoadStatus.loaded));
   }
 
   Future<void> deleteGame(int index) async {

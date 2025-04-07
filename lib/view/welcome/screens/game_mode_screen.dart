@@ -23,8 +23,7 @@ class GameModeScreen extends StatefulWidget {
 class _GameModeScreenState extends State<GameModeScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<GameCubit, GameState>(
-      listener: (context, state) {},
+    return BlocBuilder<GameCubit, GameState>(
       builder: (context, state) {
         final cubit = context.read<GameCubit>();
         late GameMode gameMode = GameMode.singlePlayer;
@@ -35,17 +34,17 @@ class _GameModeScreenState extends State<GameModeScreen> {
             child: Column(
               children: [
                 ...modes.map(
-                  (mode) => ModeCard(
+                      (mode) => ModeCard(
                     title: mode.title,
                     subtitle: mode.subtitle,
                     icon: mode.iconData,
-                    isSelected:
-                        state
-                            .gameSave
-                            .gameList
-                            .games[state.gameSave.gameList.currentIndex]
-                            .mode ==
+                    isSelected: state
+                        .gameSave
+                        .gameList
+                        .games[state.gameSave.gameList.currentIndex]
+                        .mode ==
                         mode.gameMode,
+                    isEnabled: mode.gameMode == GameMode.singlePlayer, // Disable other modes
                     onTap: () {
                       setState(() {
                         gameMode = mode.gameMode;
@@ -62,6 +61,7 @@ class _GameModeScreenState extends State<GameModeScreen> {
                     initialGame.gameList.games.first.game.field.printField(
                       revealMines: true,
                     );
+                    cubit.resetGame(widget.config, state.gameSave.gameList.games.first.mode);
                     Navigator.push(
                       context,
                       MaterialPageRoute(

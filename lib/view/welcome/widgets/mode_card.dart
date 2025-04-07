@@ -5,8 +5,9 @@ import '../../../utils/constants.dart';
 class ModeCard extends StatelessWidget {
   final String title;
   final String subtitle;
-  final IconData icon; // Changed to IconData
+  final IconData icon;
   final bool isSelected;
+  final bool isEnabled;
   final VoidCallback onTap;
 
   const ModeCard({
@@ -14,6 +15,7 @@ class ModeCard extends StatelessWidget {
     required this.subtitle,
     required this.icon,
     required this.isSelected,
+    this.isEnabled = true,
     required this.onTap,
   });
 
@@ -22,19 +24,23 @@ class ModeCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: InkWell(
-        onTap: onTap,
+        onTap: isEnabled ? onTap : null,
+        splashColor: isEnabled ? null : Colors.transparent,
+        highlightColor: isEnabled ? null : Colors.transparent,
         borderRadius: BorderRadius.circular(16),
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: AppColor.white,
+            color: isEnabled ? AppColor.white : AppColor.grey1,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: isSelected ? AppColor.primary : AppColor.grey2,
+              color: isEnabled
+                  ? (isSelected ? AppColor.primary : AppColor.grey2)
+                  : AppColor.grey2,
               width: isSelected ? 1.5 : 1,
             ),
             boxShadow: [
-              if (!isSelected)
+              if (isEnabled && !isSelected)
                 BoxShadow(
                   color: Colors.grey.withAlpha(25),
                   blurRadius: 8,
@@ -47,16 +53,19 @@ class ModeCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color:
-                  isSelected
+                  color: isEnabled
+                      ? (isSelected
                       ? AppColor.primary.withAlpha(25)
+                      : AppColor.grey1)
                       : AppColor.grey1,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   icon,
                   size: 24,
-                  color: isSelected ? AppColor.primary : AppColor.grey4,
+                  color: isEnabled
+                      ? (isSelected ? AppColor.primary : AppColor.grey4)
+                      : AppColor.grey3,
                 ),
               ),
               const SizedBox(width: 20),
@@ -69,7 +78,7 @@ class ModeCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: AppColor.grey5,
+                        color: isEnabled ? AppColor.grey5 : AppColor.grey3,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -77,7 +86,7 @@ class ModeCard extends StatelessWidget {
                       subtitle,
                       style: TextStyle(
                         fontSize: 13,
-                        color: AppColor.grey3,
+                        color: isEnabled ? AppColor.grey3 : AppColor.grey2,
                         height: 1.4,
                       ),
                     ),
@@ -85,10 +94,18 @@ class ModeCard extends StatelessWidget {
                 ),
               ),
               if (isSelected)
-                 Icon(
+                Icon(
                   Icons.check_circle_rounded,
                   color: AppColor.primary,
                   size: 24,
+                ),
+              if (!isEnabled)
+                Text(
+                  'Coming Soon',
+                  style: TextStyle(
+                    color: AppColor.grey3,
+                    fontSize: 12,
+                  ),
                 ),
             ],
           ),

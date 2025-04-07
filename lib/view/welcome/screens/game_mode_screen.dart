@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:minesweeper/logic/field_config.dart';
 import '../../../cubit/game/game_cubit.dart';
 
+import '../../../logic/field_config.dart';
 import '../../../logic/game_controller.dart';
 import '../../../logic/game_save.dart';
 import '../../../logic/mode.dart';
@@ -13,7 +13,8 @@ import '../../global_elements/custom_elevated_button.dart';
 
 class GameModeScreen extends StatefulWidget {
   final FieldConfig config;
-  const GameModeScreen({super.key,required this.config});
+
+  const GameModeScreen({super.key, required this.config});
 
   @override
   State<GameModeScreen> createState() => _GameModeScreenState();
@@ -23,9 +24,7 @@ class _GameModeScreenState extends State<GameModeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<GameCubit, GameState>(
-      listener: (context, state) {
-
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         final cubit = context.read<GameCubit>();
         late GameMode gameMode = GameMode.singlePlayer;
@@ -41,7 +40,11 @@ class _GameModeScreenState extends State<GameModeScreen> {
                     subtitle: mode.subtitle,
                     icon: mode.iconData,
                     isSelected:
-                        state.gameSave.gameList.games[state.gameSave.gameList.currentIndex].mode ==
+                        state
+                            .gameSave
+                            .gameList
+                            .games[state.gameSave.gameList.currentIndex]
+                            .mode ==
                         mode.gameMode,
                     onTap: () {
                       setState(() {
@@ -55,11 +58,16 @@ class _GameModeScreenState extends State<GameModeScreen> {
                 const SizedBox(height: 32),
                 CustomElevatedButton(
                   onPress: () {
-                    GameSave initialGame= cubit.state.gameSave;
-                    initialGame.gameList.games.first.game.field.printField(revealMines: true);
+                    GameSave initialGame = cubit.state.gameSave;
+                    initialGame.gameList.games.first.game.field.printField(
+                      revealMines: true,
+                    );
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => GameScreen(initialGame: initialGame,)),
+                      MaterialPageRoute(
+                        builder:
+                            (context) => GameScreen(initialGame: initialGame),
+                      ),
                     );
                   },
                   child: const Text('Play'),

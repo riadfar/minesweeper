@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 enum BlockType { empty, mine, number }
 
 enum BlockState { hidden, revealed, flagged }

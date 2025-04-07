@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:minesweeper/view/game/widgets/win_widget.dart';
 
 import '../../../cubit/game/game_cubit.dart';
+import '../../../logic/field_config.dart';
 import '../../../logic/game_controller.dart';
 import '../../welcome/screens/field_config_screen.dart';
 import 'grid_view.dart';
 import 'lost_widget.dart';
+import 'win_widget.dart';
 
 class FieldWidget extends StatefulWidget {
   final List<GameController> controllers;
   final int controllerIndex;
 
-  const FieldWidget({super.key, required this.controllers, required this.controllerIndex});
+  const FieldWidget({
+    super.key,
+    required this.controllers,
+    required this.controllerIndex,
+  });
 
   @override
   State<FieldWidget> createState() => _FieldWidgetState();
@@ -51,10 +56,21 @@ class _FieldWidgetState extends State<FieldWidget> {
                   },
                   onNewGame: () {
                     Navigator.pop(context);
-                    cubit.resetGame(state.gameSave.gameList.games[state.gameSave.gameList.currentIndex].game.field.config,  state.gameSave.gameList.games[state.gameSave.gameList.currentIndex].mode);
-                    print(state.gameSave.gameList.games[state.gameSave.gameList.currentIndex].game.field.config.toString());
-                    print(state.gameSave.gameList.games[state.gameSave.gameList.currentIndex].mode);
-
+                    FieldConfig config =
+                        state
+                            .gameSave
+                            .gameList
+                            .games[state.gameSave.gameList.currentIndex]
+                            .game
+                            .field
+                            .config;
+                    GameMode mode =
+                        state
+                            .gameSave
+                            .gameList
+                            .games[state.gameSave.gameList.currentIndex]
+                            .mode;
+                    cubit.resetGame(config, mode);
                   },
                 ),
           );
@@ -75,19 +91,37 @@ class _FieldWidgetState extends State<FieldWidget> {
                   },
                   onNewGame: () {
                     Navigator.pop(context);
-                    cubit.resetGame(state.gameSave.gameList.games[state.gameSave.gameList.currentIndex].game.field.config,  state.gameSave.gameList.games[state.gameSave.gameList.currentIndex].mode);
+                    cubit.resetGame(
+                      state
+                          .gameSave
+                          .gameList
+                          .games[state.gameSave.gameList.currentIndex]
+                          .game
+                          .field
+                          .config,
+                      state
+                          .gameSave
+                          .gameList
+                          .games[state.gameSave.gameList.currentIndex]
+                          .mode,
+                    );
                   },
                 ),
           );
         }
       },
       builder: (context, state) {
-        return widget.controllers.length==1?Grid(controller: widget.controllers[widget.controllerIndex],gameIndex: 0):Column(
-          children: [
-            Grid(controller: widget.controllers.first,gameIndex: 0,),
-            Grid(controller: widget.controllers.last,gameIndex: 1,),
-          ],
-        );
+        return widget.controllers.length == 1
+            ? Grid(
+              controller: widget.controllers[widget.controllerIndex],
+              gameIndex: 0,
+            )
+            : Column(
+              children: [
+                Grid(controller: widget.controllers.first, gameIndex: 0),
+                Grid(controller: widget.controllers.last, gameIndex: 1),
+              ],
+            );
       },
     );
   }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:minesweeper/cubit/save_load/save_load_cubit.dart';
-import 'package:minesweeper/view/global_elements/custom_app_bar.dart';
-import 'package:minesweeper/view/load_screen/widgets/saved_games_list_view.dart';
+
+import '../../../cubit/save_load/save_load_cubit.dart';
+import '../../global_elements/custom_app_bar.dart';
+import '../widgets/saved_games_list_view.dart';
+
 
 class LoadScreen extends StatefulWidget {
   const LoadScreen({super.key});

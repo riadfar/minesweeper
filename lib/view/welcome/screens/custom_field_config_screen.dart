@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../logic/field_config.dart';

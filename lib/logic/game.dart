@@ -1,6 +1,5 @@
 import 'block.dart';
 import 'field.dart';
-import 'game_memento.dart';
 
 class Game {
   Field field;

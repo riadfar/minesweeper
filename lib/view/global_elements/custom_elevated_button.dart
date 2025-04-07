@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
-import '../welcome/screens/game_mode_screen.dart';
-
 class CustomElevatedButton extends StatefulWidget {
   final Function() onPress;
   final Widget child;
@@ -29,7 +27,7 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () async{
+      onPressed: () async {
         await _playSound();
         await Future.delayed(const Duration(milliseconds: 100));
         widget.onPress();

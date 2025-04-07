@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:minesweeper/view/welcome/screens/field_config_screen.dart';
 import '../../../utils/constants.dart';
 import '../../global_elements/custom_elevated_button.dart';
 
@@ -9,14 +8,15 @@ class WinWidget extends StatelessWidget {
   final VoidCallback backToMenu;
 
 
-  const WinWidget({super.key, required this.onNewGame, required this.backToMenu});
+  const WinWidget(
+      {super.key, required this.onNewGame, required this.backToMenu});
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
-        padding: const EdgeInsets.fromLTRB(18,24,18,24),
+        padding: const EdgeInsets.fromLTRB(18, 24, 18, 24),
         decoration: BoxDecoration(
           color: AppColor.white,
           borderRadius: BorderRadius.circular(24),

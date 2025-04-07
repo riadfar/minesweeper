@@ -48,24 +48,50 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
               ),
-              body: Stack(
-                children: [
-                  // Positioned.fill(
-                  //   child: Image.asset(
-                  //     'assets/images/background_image.png',
-                  //     fit: BoxFit.fill,
-                  //   ),
-                  // ),
-                  Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          CustomElevatedButton(
+              body: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      CustomElevatedButton(
+                        child: const Text(
+                          "New Game",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onPress: () {
+                          final cubit = context.read<GameCubit>();
+                          cubit.resetGame(
+                            cubit
+                                .gameSave!
+                                .gameList
+                                .games
+                                .first
+                                .game
+                                .field
+                                .config,
+                            cubit.gameSave!.gameList.games.first.mode,
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => const FieldConfigScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      state.status == SaveLoadStatus.loading
+                          ? const CircularProgressIndicator()
+                          : CustomElevatedButton(
                             child: const Text(
-                              "New Game",
+                              "Load Game",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
@@ -73,54 +99,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               ),
                             ),
                             onPress: () {
-                              final cubit = context.read<GameCubit>();
-                              cubit.resetGame(
-                                cubit
-                                    .gameSave!
-                                    .gameList
-                                    .games
-                                    .first
-                                    .game
-                                    .field
-                                    .config,
-                                cubit.gameSave!.gameList.games.first.mode,
-                              );
+                              saveCubit.fetchGames();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder:
-                                      (context) => const FieldConfigScreen(),
+                                  builder: (context) => const LoadScreen(),
                                 ),
                               );
                             },
                           ),
-                          const SizedBox(height: 20),
-                          state.status == SaveLoadStatus.loading
-                              ? const CircularProgressIndicator()
-                              : CustomElevatedButton(
-                                child: const Text(
-                                  "Load Game",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                onPress: () {
-                                  saveCubit.fetchGames();
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const LoadScreen(),
-                                    ),
-                                  );
-                                },
-                              ),
-                        ],
-                      ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ],

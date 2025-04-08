@@ -85,13 +85,14 @@ class Game {
     field.printField(revealMines: !isRunning);
   }
 
-  /// for memento
+  /// FOR MEMENTO
 
   Game copy() {
     return Game(field: field.copy(), isRunning: isRunning);
   }
 
-  ///for save and load the game
+  ///FOR SAVE THE GAME
+
   Map<String, dynamic> toJson() => {
     "field": field.toJson(),
     "isRunning": isRunning,

@@ -14,7 +14,8 @@ class FieldConfig {
   factory FieldConfig.initial() =>
       FieldConfig(width: 0, height: 0, minesCount: 0);
 
-  /// for memento
+  /// FOR MEMENTO
+
   FieldConfig copy() => FieldConfig(
     difficulty: difficulty,
     width: width,
@@ -22,7 +23,7 @@ class FieldConfig {
     minesCount: minesCount,
   );
 
-  /// for save and load the game
+  /// FOR SAVE THE GAME
   Map<String, dynamic> toJson() => {
     "difficulty": difficulty,
     "width": width,

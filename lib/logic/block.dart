@@ -27,13 +27,13 @@ class Block {
 
   bool get isFlagged => state == BlockState.flagged;
 
-  /// for memento
+  /// FOR MEMENTO
 
   Block copy() {
     return Block(type: type, number: number, state: state);
   }
 
-  /// for save and load the game
+  /// FOR SAVE LOAD THE GAME
   Map<String, dynamic> toJson() => {
     "type": type.index,
     "number": number,

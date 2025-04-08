@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubit/game/game_cubit.dart';
 import '../../../cubit/save_load/save_load_cubit.dart';
+import '../../../logic/field_config.dart';
+import '../../../logic/game_controller.dart';
 import '../../global_elements/custom_app_bar.dart';
 import '../../global_elements/custom_elevated_button.dart';
 import '../../load_screen/screen/load_screen.dart';
@@ -36,7 +38,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 fit: BoxFit.fill,
               ),
             ),
-            Scaffold(backgroundColor: Colors.transparent,
+            Scaffold(
+              backgroundColor: Colors.transparent,
               appBar: CustomAppBar(
                 title: const Text(
                   "Welcome",
@@ -66,22 +69,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ),
                         onPress: () {
                           final cubit = context.read<GameCubit>();
-                          cubit.resetGame(
-                            cubit
-                                .gameSave!
-                                .gameList
-                                .games
-                                .first
-                                .game
-                                .field
-                                .config,
-                            cubit.gameSave!.gameList.games.first.mode,
-                          );
+                          GameMode mode =
+                              cubit.gameSave!.gameList.games.first.mode;
+                          FieldConfig config =
+                              cubit
+                                  .gameSave!
+                                  .gameList
+                                  .games
+                                  .first
+                                  .game
+                                  .field
+                                  .config;
+
+                          cubit.resetGame(config, mode);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder:
-                                  (context) => const FieldConfigScreen(),
+                              builder: (context) => const FieldConfigScreen(),
                             ),
                           );
                         },

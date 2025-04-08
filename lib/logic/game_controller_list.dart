@@ -4,6 +4,9 @@ class GameControllerList {
   final List<GameController> _games;
   final int currentIndex;
 
+  // for me
+  // can't assign games to _games bec it has to be initialized first then ....
+
   const GameControllerList({
     List<GameController> games = const [],
     this.currentIndex = 0,

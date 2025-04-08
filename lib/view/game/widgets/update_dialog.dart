@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubit/save_load/save_load_cubit.dart';
 import '../../global_elements/custom_elevated_button.dart';
 import '../../welcome/screens/welcome_screen.dart';
 
 class UpdateDialog extends StatefulWidget {
-  final SaveLoadCubit saveCubit;
+
   final int gameIndex;
-  const UpdateDialog({super.key, required this.saveCubit, required this.gameIndex});
+  const UpdateDialog({super.key,required this.gameIndex});
 
   @override
   State<UpdateDialog> createState() => _UpdateDialogState();
@@ -41,7 +42,8 @@ class _UpdateDialogState extends State<UpdateDialog> {
                   CustomElevatedButton(
                     child: Text("Save"),
                     onPress: () {
-                      widget.saveCubit.updateGame(widget.gameIndex);
+                      SaveLoadCubit saveCubit =context.read<SaveLoadCubit>();
+                      saveCubit.updateGame(widget.gameIndex);
 
                       Navigator.pushAndRemoveUntil(
                         context,

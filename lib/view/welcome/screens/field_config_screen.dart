@@ -20,7 +20,6 @@ class _FieldConfigScreenState extends State<FieldConfigScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<GameCubit, GameState>(
       listener: (context, state) {
-        // Show error messages if any
         if (state.error.isNotEmpty) {
           ScaffoldMessenger.of(
             context,
@@ -29,14 +28,15 @@ class _FieldConfigScreenState extends State<FieldConfigScreen> {
       },
       builder: (context, state) {
         final cubit = context.read<GameCubit>();
-        FieldConfig fieldConfig = FieldConfig(
-          width: 8,
-          height: 8,
-          minesCount: 25,
-        );
+        FieldConfig fieldConfig = defaultConfigs[0];
 
         return Scaffold(
-          appBar: CustomAppBar(title: const Text("Choose Field Size",style: TextStyle(color: Colors.white),)),
+          appBar: CustomAppBar(
+            title: const Text(
+              "Choose Field Size",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
           body: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
@@ -60,7 +60,7 @@ class _FieldConfigScreenState extends State<FieldConfigScreen> {
                       cubit.setFieldConfig(config);
                     }, // Use cubit instead of callback
                   ),
-                CustomConfigWidget(cubit: cubit),
+                CustomConfigWidget(),
                 CustomElevatedButton(
                   child: const Text("Next"),
                   onPress: () {

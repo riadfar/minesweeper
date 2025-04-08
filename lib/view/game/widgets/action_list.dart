@@ -47,13 +47,13 @@ List<Widget> ActionList (gameSave,savedGame,initialGame,saveCubit,index,){
 void _showSaveDialog(BuildContext context, SaveLoadCubit saveCubit) {
   showDialog(
     context: context,
-    builder: (context) => SaveDialog(saveCubit: saveCubit),
+    builder: (context) => SaveDialog(),
   );
 }
 
 void _showUpdateDialog(BuildContext context, SaveLoadCubit saveCubit,index) {
   showDialog(
     context: context,
-    builder: (context) => UpdateDialog(saveCubit: saveCubit,gameIndex: index,),
+    builder: (context) => UpdateDialog(gameIndex: index,),
   );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubit/save_load/save_load_cubit.dart';
 import '../../global_elements/custom_elevated_button.dart';
@@ -6,9 +7,9 @@ import '../../welcome/screens/welcome_screen.dart';
 import '../../global_elements/my_text_field.dart';
 
 class SaveDialog extends StatefulWidget {
-  final SaveLoadCubit saveCubit;
 
-  const SaveDialog({super.key, required this.saveCubit});
+
+  const SaveDialog({super.key});
 
   @override
   State<SaveDialog> createState() => _SaveDialogState();
@@ -53,7 +54,8 @@ class _SaveDialogState extends State<SaveDialog> {
                       print("-----------------------------------");
                       print(gameNameTextController.text);
                       print("-----------------------------------");
-                      widget.saveCubit.saveGame(gameNameTextController.text);
+                      SaveLoadCubit saveCubit =context.read<SaveLoadCubit>();
+                      saveCubit.saveGame(gameNameTextController.text);
 
                       Navigator.pushAndRemoveUntil(
                         context,

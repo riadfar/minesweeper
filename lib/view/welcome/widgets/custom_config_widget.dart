@@ -6,9 +6,9 @@ import '../screens/custom_field_config_screen.dart';
 import 'config_card.dart';
 
 class CustomConfigWidget extends StatelessWidget {
-  const CustomConfigWidget({super.key, required this.cubit});
+  const CustomConfigWidget({super.key,});
 
-  final GameCubit cubit;
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class CustomConfigWidget extends StatelessWidget {
                 MaterialPageRoute(
                   builder:
                       (context) => BlocProvider.value(
-                        value: cubit,
+                        value: context.read<GameCubit>(),
                         child: CustomFieldConfigScreen(),
                       ),
                 ),

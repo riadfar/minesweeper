@@ -41,6 +41,6 @@ class FieldConfig {
 
 List<FieldConfig> defaultConfigs = [
   FieldConfig(difficulty: "Easy", width: 9, height: 9, minesCount: 10),
-  FieldConfig(difficulty: 'Medium', width: 16, height: 16, minesCount: 40),
-  FieldConfig(difficulty: 'Hard', width: 16, height: 30, minesCount: 99),
+  FieldConfig(difficulty: 'Medium', width: 12, height: 12, minesCount: 30),
+  FieldConfig(difficulty: 'Hard', width: 16, height: 16, minesCount: 40),
 ];

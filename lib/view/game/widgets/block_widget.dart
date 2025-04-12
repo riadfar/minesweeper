@@ -14,9 +14,7 @@ class BlockWidget extends StatefulWidget {
 class _BlockWidgetState extends State<BlockWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Image.asset(_imagePath(widget.block), fit: BoxFit.cover),
-    );
+    return Image.asset(_imagePath(widget.block), fit: BoxFit.cover);
   }
 
   String _imagePath(Block block) {

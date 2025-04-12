@@ -38,34 +38,46 @@ class Field {
   }
 
   void _calculateNumbers() {
+    _gridLoop((int x, int y) {
+      if (grid[y][x].type != BlockType.mine) {
+        final count = _countAdjacentMines(x, y);
+        if (count > 0) {
+          grid[y][x] = Block(type: BlockType.number, number: count);
+        }
+      }
+    });
+  }
+
+  void _gridLoop(Function callBack) {
     for (int y = 0; y < config.height; y++) {
       for (int x = 0; x < config.width; x++) {
-        if (grid[y][x].type != BlockType.mine) {
-          final count = _countAdjacentMines(x, y);
-          if (count > 0) {
-            grid[y][x] = Block(type: BlockType.number, number: count);
-          }
-        }
+        callBack(x, y);
       }
     }
   }
 
   int _countAdjacentMines(int x, int y) {
     int count = 0;
+    _loopAroundMine((int dx, int dy) {
+      final nx = x + dx;
+      final ny = y + dy;
+      if (nx >= 0 &&
+          nx < config.width &&
+          ny >= 0 &&
+          ny < config.height &&
+          grid[ny][nx].type == BlockType.mine) {
+        count++;
+      }
+    });
+    return count;
+  }
+
+  _loopAroundMine(Function callBack) {
     for (int dy = -1; dy <= 1; dy++) {
       for (int dx = -1; dx <= 1; dx++) {
-        final nx = x + dx;
-        final ny = y + dy;
-        if (nx >= 0 &&
-            nx < config.width &&
-            ny >= 0 &&
-            ny < config.height &&
-            grid[ny][nx].type == BlockType.mine) {
-          count++;
-        }
+        callBack(dx, dy);
       }
     }
-    return count;
   }
 
   void printField({bool revealMines = false}) {
@@ -125,5 +137,105 @@ class Field {
             )
             .toList();
     return field;
+  }
+}
+
+class FieldTest {
+  late List<List<Block>> grid;
+  FieldConfig config;
+
+  FieldTest({required this.config}) {
+    _initializeGrid();
+    _placeMines();
+    _calculateNumbers();
+  }
+
+  factory FieldTest.initial() => FieldTest(config: FieldConfig.initial());
+
+  void _initializeGrid() {
+    grid = List.generate(
+      config.height,
+      (y) => List.generate(config.width, (x) => Block(type: BlockType.empty)),
+    );
+  }
+
+  void _placeMines() {
+    int minesPlaced = 0;
+    final random = Random();
+
+    while (minesPlaced < config.minesCount) {
+      final x = random.nextInt(config.width);
+      final y = random.nextInt(config.height);
+
+      if (grid[y][x].type != BlockType.mine) {
+        grid[y][x] = Block(type: BlockType.mine);
+        minesPlaced++;
+      }
+    }
+  }
+
+  void _calculateNumbers() {
+    _loopFunc((int x, int y) {
+      if (grid[y][x].type != BlockType.mine) {
+        final count = _countAdjacentMines(x, y);
+        if (count > 0) {
+          grid[y][x] = Block(type: BlockType.number, number: count);
+        }
+      }
+    });
+  }
+
+  void _loopFunc(Function callBack) {
+    for (int y = 0; y < config.height; y++) {
+      for (int x = 0; x < config.width; x++) {
+        callBack(x, y);
+      }
+    }
+  }
+
+  int _countAdjacentMines(int x, int y) {
+    int count = 0;
+    for (int dy = -1; dy <= 1; dy++) {
+      for (int dx = -1; dx <= 1; dx++) {
+        final nx = x + dx;
+        final ny = y + dy;
+        if (nx >= 0 &&
+            nx < config.width &&
+            ny >= 0 &&
+            ny < config.height &&
+            grid[ny][nx].type == BlockType.mine) {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
+
+  void printField({bool revealMines = false}) {
+    for (int y = 0; y < config.height; y++) {
+      String rowStr = '';
+      for (int x = 0; x < config.width; x++) {
+        final block = grid[y][x];
+        if (block.isRevealed || revealMines) {
+          rowStr += '${_getBlockSymbol(block)} ';
+        } else if (block.isFlagged) {
+          rowStr += 'F ';
+        } else {
+          rowStr += '. ';
+        }
+      }
+      print(rowStr);
+    }
+    print("--------------------");
+  }
+
+  String _getBlockSymbol(Block block) {
+    if (block.type == BlockType.mine) {
+      return '*';
+    } else if (block.type == BlockType.number && block.number > 0) {
+      return block.number.toString();
+    } else {
+      return ' ';
+    }
   }
 }

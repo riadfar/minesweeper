@@ -33,43 +33,46 @@ class _GridState extends State<Grid> {
     final height = config.height;
     final width = config.width;
 
-    return GridView.builder(
-      scrollDirection: Axis.vertical,
-      physics: NeverScrollableScrollPhysics(),
-      primary: true,
-      shrinkWrap: true,
-      addAutomaticKeepAlives: true,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: width,
-        childAspectRatio: 1.0,
-        mainAxisSpacing: 1.0,
-        crossAxisSpacing: 1.0,
-      ),
-      itemCount: width * height,
-      itemBuilder: (context, index) {
-        final row = index ~/ width;
-        final col = index % width;
-        final block = game.field.grid[row][col];
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: GridView.builder(
+        scrollDirection: Axis.vertical,
+        physics: NeverScrollableScrollPhysics(),
+        primary: true,
+        shrinkWrap: true,
+        addAutomaticKeepAlives: true,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: width,
+          childAspectRatio: 1.0,
+          mainAxisSpacing: 1.0,
+          crossAxisSpacing: 1.0,
+        ),
+        itemCount: width * height,
+        itemBuilder: (context, index) {
+          final row = index ~/ width;
+          final col = index % width;
+          final block = game.field.grid[row][col];
 
-        return InkWell(
-          onTap: () async {
-            cubit.handleClick(row, col,widget.gameIndex);
-            await _playSound("assets/sounds/click_sound.mp3");
-          },
-          onLongPress: () async {
-            cubit.handleLongClick(col, row,widget.gameIndex);
-            await _playSound("assets/sounds/click_sound.mp3");
-          },
-          child: BlockWidget(block: block),
-        );
-      },
+          return InkWell(
+            onTap: ()  {
+              cubit.handleClick(row, col,widget.gameIndex);
+               _playSound("assets/sounds/click_sound.mp3");
+            },
+            onLongPress: ()  {
+              cubit.handleLongClick(row, col,widget.gameIndex);
+               _playSound("assets/sounds/click_sound.mp3");
+            },
+            child: BlockWidget(block: block),
+          );
+        },
+      ),
     );
   }
 
-  Future<void> _playSound(String sound) async {
+  void _playSound(String sound)  {
     try {
-      await _player.setAsset(sound);
-      await _player.play();
+       _player.setAsset(sound);
+       _player.play();
     } catch (e) {
       debugPrint("Error playing sound: $e");
     }

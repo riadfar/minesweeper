@@ -31,7 +31,7 @@ class _FieldConfigScreenState extends State<FieldConfigScreen> {
         FieldConfig fieldConfig = defaultConfigs[0];
 
         return Scaffold(
-          appBar: CustomAppBar(
+          appBar: customAppBar(
             title: const Text(
               "Choose Field Size",
               style: TextStyle(color: Colors.white),

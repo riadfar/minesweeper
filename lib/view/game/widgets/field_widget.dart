@@ -40,7 +40,7 @@ class _FieldWidgetState extends State<FieldWidget> {
     return BlocConsumer<GameCubit, GameState>(
       listener: (context, state) async {
         if (state.status == GameStatus.lost) {
-          await _playSound("assets/sounds/lose.mp3");
+          _playSound("assets/sounds/lose.mp3");
           showDialog(
             context: context,
             builder:
@@ -75,7 +75,7 @@ class _FieldWidgetState extends State<FieldWidget> {
                 ),
           );
         } else if (state.status == GameStatus.won) {
-          await _playSound("assets/sounds/win.mp3");
+          _playSound("assets/sounds/win.mp3");
           showDialog(
             context: (context),
             builder:
@@ -111,25 +111,23 @@ class _FieldWidgetState extends State<FieldWidget> {
         }
       },
       builder: (context, state) {
-        return widget.controllers.length == 1
-            ? Grid(
-              controller: widget.controllers[widget.controllerIndex],
-              gameIndex: 0,
-            )
-            : Column(
-              children: [
-                Grid(controller: widget.controllers.first, gameIndex: 0),
-                Grid(controller: widget.controllers.last, gameIndex: 1),
-              ],
-            );
+        return SizedBox(height: MediaQuery.of(context).size.height *0.9,
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: widget.controllers.length,
+            itemBuilder:
+                (context, index) =>
+                    Grid(controller: widget.controllers[index], gameIndex: index),
+          ),
+        );
       },
     );
   }
 
-  Future<void> _playSound(String sound) async {
+  void _playSound(String sound) {
     try {
-      await _player.setAsset(sound);
-      await _player.play();
+      _player.setAsset(sound);
+      _player.play();
     } catch (e) {
       debugPrint("Error playing sound: $e");
     }

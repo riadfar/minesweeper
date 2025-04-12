@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../utils/constants.dart';
 
-AppBar CustomAppBar({required Widget title, List<Widget>? actions}) => AppBar(
+AppBar customAppBar({required Widget title, List<Widget>? actions}) => AppBar(
   backgroundColor: AppColor.primary,
   elevation: 4,
   shape: const RoundedRectangleBorder(

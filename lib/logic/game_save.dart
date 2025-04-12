@@ -1,13 +1,17 @@
 import 'game_controller.dart';
 import 'game_controller_list.dart';
 import 'game_memento.dart';
+import 'undoable.dart';
 
-class GameSave {
+class GameSave extends Undoable {
   String id;
   String date;
   GameControllerList gameList;
-  List<ControllerMemento> undoStack = [];
-  List<ControllerMemento> redoStack = [];
+
+  @override
+  List<ControllerMemento> undoStack;
+  @override
+  List<ControllerMemento> redoStack ;
 
   GameSave({
     required this.id,
@@ -24,7 +28,6 @@ class GameSave {
     undoStack: [],
     redoStack: [],
   );
-
 
   GameSave copyWith({
     String? id,
@@ -43,7 +46,7 @@ class GameSave {
   }
 
   /// HANDLING UNDO,REDO AND SAVING THE STATE
-
+  @override
   void undo() {
     if (undoStack.isEmpty) return;
     final previousState = undoStack.removeLast();
@@ -51,6 +54,7 @@ class GameSave {
     gameList = previousState.getSavedState();
   }
 
+  @override
   void redo() {
     if (redoStack.isEmpty) return;
     final nextState = redoStack.removeLast();
@@ -58,8 +62,9 @@ class GameSave {
     gameList = nextState.getSavedState();
   }
 
-  void saveState(GameControllerList state) {
-    undoStack.add(ControllerMemento(state.copy()));
+  @override
+  void saveState(state) {
+    undoStack.add(ControllerMemento(state));
     redoStack.clear();
   }
 
@@ -73,7 +78,9 @@ class GameSave {
     'redoStack': redoStack.map((memento) => memento.toJson()).toList(),
   };
 
-  factory GameSave.fromJson(Map<String, dynamic> json) => GameSave(
+  factory GameSave.fromJson(Map<String, dynamic> json) {
+
+    return GameSave(
     id: json['id'],
     date: json['date'],
     gameList: GameControllerList.fromJson(json['gameList']),
@@ -86,5 +93,5 @@ class GameSave {
             .map((m) => ControllerMemento.fromJson(m))
             .toList(),
   );
-
+  }
 }

@@ -120,6 +120,8 @@ class GameCubit extends Cubit<GameState> {
     if (state.gameSave.undoStack.isEmpty) return;
     emit(state.copyWith(status: GameStatus.loading));
     state.gameSave.undo();
+    state.gameSave.gameList.games.first.game.field.printField();
+    print("inside cubit");
     emit(state.copyWith(status: GameStatus.playing));
   }
 

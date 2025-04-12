@@ -4,7 +4,6 @@ enum SaveLoadStatus { initial, loading, loaded, error, create, save, delete ,emp
 
 class SaveLoadState extends Equatable {
   final SaveLoadStatus status;
-
   final GameSave gameSave;
   final List<GameSave> games;
   final String error;

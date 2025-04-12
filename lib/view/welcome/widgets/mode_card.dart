@@ -10,7 +10,7 @@ class ModeCard extends StatelessWidget {
   final bool isEnabled;
   final VoidCallback onTap;
 
-  const ModeCard({
+  const ModeCard({super.key,
     required this.title,
     required this.subtitle,
     required this.icon,

@@ -27,9 +27,9 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () async {
-        await _playSound();
-        await Future.delayed(const Duration(milliseconds: 100));
+      onPressed: ()  {
+         _playSound();
+         Future.delayed(const Duration(milliseconds: 100));
         widget.onPress();
       },
       style: ElevatedButton.styleFrom(
@@ -42,10 +42,10 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
     );
   }
 
-  Future<void> _playSound() async {
+  void _playSound()  {
     try {
-      await _player.setAsset('assets/sounds/click_sound_2.mp3');
-      await _player.play();
+       _player.setAsset('assets/sounds/click_sound_2.mp3');
+       _player.play();
     } catch (e) {
       debugPrint("Error playing sound: $e");
     }

@@ -23,6 +23,9 @@ class Block {
     }
   }
 
+
+  factory Block.initial()=>Block(type: BlockType.number,number: 0,state: BlockState.hidden);
+
   bool get isRevealed => state == BlockState.revealed;
 
   bool get isFlagged => state == BlockState.flagged;
@@ -45,4 +48,16 @@ class Block {
     number: json['number'],
     state: BlockState.values[json['state']],
   );
+
+  Block copyWith({
+    int? number,
+    BlockType? type,
+    BlockState? state,
+  }) {
+    return Block(
+      number: number ?? this.number,
+      type: type ?? this.type,
+      state: state ?? this.state,
+    );
+  }
 }

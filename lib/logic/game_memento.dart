@@ -1,16 +1,28 @@
+
 import 'game_controller_list.dart';
 
-class ControllerMemento {
-  final GameControllerList _state;
+class ControllerMemento implements Memento {
 
-  ControllerMemento(this._state);
+  @override
+  final dynamic state;
 
-  GameControllerList getSavedState() => _state.copy();
+  ControllerMemento(this.state);
+
+  @override
+  dynamic getSavedState() => state.copy();
 
   ///FOR SAVE AND LOAD THE GAME
-
-  Map<String, dynamic> toJson() => {"state": _state.toJson()};
+  Map<String, dynamic> toJson() => {"state": state.toJson()};
 
   factory ControllerMemento.fromJson(Map<String, dynamic> json) =>
       ControllerMemento(GameControllerList.fromJson(json['state']));
+}
+
+abstract class Memento {
+  final dynamic state;
+
+  Memento(this.state);
+
+  dynamic getSavedState() => state.copy();
+
 }

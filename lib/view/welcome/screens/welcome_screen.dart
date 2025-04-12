@@ -40,7 +40,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             Scaffold(
               backgroundColor: Colors.transparent,
-              appBar: CustomAppBar(
+              appBar: customAppBar(
                 title: const Text(
                   "Welcome",
                   textAlign: TextAlign.center,

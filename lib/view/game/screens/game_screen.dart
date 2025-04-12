@@ -35,12 +35,12 @@ class _GameScreenState extends State<GameScreen> {
               ? saveCubit.setGames([state.gameSave])
               : saveCubit.setGames([widget.savedGame!]);
           return Scaffold(
-            appBar: CustomAppBar(
+            appBar: customAppBar(
               title: Text(
                 "Minesweeper",
                 style: TextStyle(fontWeight: FontWeight.w300, fontSize: 22,color: Colors.white),
               ),
-              actions: ActionList(
+              actions: actionList(
                 state.gameSave,
                 widget.savedGame,
                 widget.initialGame,
@@ -58,29 +58,50 @@ class _GameScreenState extends State<GameScreen> {
               ),
             ),
             floatingActionButton:
-                state.gameSave.gameList.length == 1
-                    ? FloatingActionButton(
-                      onPressed: () {
-                        if (state.gameSave.gameList.length == 1) {
-                          context.read<GameCubit>().addNewGame(
-                            state
-                                .gameSave
-                                .gameList
-                                .games[state.gameSave.gameList.currentIndex]
-                                .game
-                                .field
-                                .config,
-                            state
-                                .gameSave
-                                .gameList
-                                .games[state.gameSave.gameList.currentIndex]
-                                .mode,
-                          );
-                        }
-                      },
-                      child: Icon(Icons.add),
-                    )
-                    : null,
+          FloatingActionButton(
+                onPressed: () {
+
+                    context.read<GameCubit>().addNewGame(
+                      state
+                          .gameSave
+                          .gameList
+                          .games[state.gameSave.gameList.currentIndex]
+                          .game
+                          .field
+                          .config,
+                      state
+                          .gameSave
+                          .gameList
+                          .games[state.gameSave.gameList.currentIndex]
+                          .mode,
+                    );
+
+                },
+                child: Icon(Icons.add),
+              )
+                // state.gameSave.gameList.length == 1
+                //     ? FloatingActionButton(
+                //       onPressed: () {
+                //         if (state.gameSave.gameList.length == 1) {
+                //           context.read<GameCubit>().addNewGame(
+                //             state
+                //                 .gameSave
+                //                 .gameList
+                //                 .games[state.gameSave.gameList.currentIndex]
+                //                 .game
+                //                 .field
+                //                 .config,
+                //             state
+                //                 .gameSave
+                //                 .gameList
+                //                 .games[state.gameSave.gameList.currentIndex]
+                //                 .mode,
+                //           );
+                //         }
+                //       },
+                //       child: Icon(Icons.add),
+                //     )
+                //     : null,
           );
         },
       ),

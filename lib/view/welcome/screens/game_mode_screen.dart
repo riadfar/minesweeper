@@ -28,7 +28,7 @@ class _GameModeScreenState extends State<GameModeScreen> {
         final cubit = context.read<GameCubit>();
         late GameMode gameMode = GameMode.singlePlayer;
         return Scaffold(
-          appBar: CustomAppBar(title: const Text('Choose Game Mode',style: TextStyle(color: Colors.white),)),
+          appBar: customAppBar(title: const Text('Choose Game Mode',style: TextStyle(color: Colors.white),)),
           body: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(

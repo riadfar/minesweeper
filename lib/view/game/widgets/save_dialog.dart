@@ -18,7 +18,7 @@ class SaveDialog extends StatefulWidget {
 class _SaveDialogState extends State<SaveDialog> {
   @override
   Widget build(BuildContext context) {
-    TextEditingController gameNameTextController = new TextEditingController();
+    TextEditingController gameNameTextController = TextEditingController();
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: ConstrainedBox(

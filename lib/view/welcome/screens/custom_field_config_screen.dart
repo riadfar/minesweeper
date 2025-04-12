@@ -35,8 +35,6 @@ class _CustomFieldConfigScreenState extends State<CustomFieldConfigScreen> {
         minesCount: int.parse(_minesController.text),
       );
 
-
-      // Navigator.pop(context);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>GameModeScreen(config: config,)));
     }
   }
@@ -44,7 +42,7 @@ class _CustomFieldConfigScreenState extends State<CustomFieldConfigScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: const Text("Custom Configuration",style: TextStyle(color: Colors.white),)),
+      appBar: customAppBar(title: const Text("Custom Configuration",style: TextStyle(color: Colors.white),)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -73,8 +71,8 @@ class _CustomFieldConfigScreenState extends State<CustomFieldConfigScreen> {
               ),
               const SizedBox(height: 32),
               CustomElevatedButton(
+                onPress: _submit,
                 child: const Text("Submit"),
-                onPress: _submit, // Use local submit handler
               ),
             ],
           ),

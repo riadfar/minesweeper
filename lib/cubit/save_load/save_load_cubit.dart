@@ -28,7 +28,7 @@ class SaveLoadCubit extends Cubit<SaveLoadState> {
 
   ///HANDLE CRUD METHODE
 
-  Future<void> saveGame(String gameName) async {
+  void saveGame(String gameName) {
     emit(state.copyWith(status: SaveLoadStatus.loading));
     try {
       String date = DateTime.now().toString().substring(0, 16);
@@ -36,14 +36,14 @@ class SaveLoadCubit extends Cubit<SaveLoadState> {
       newGame.date = date;
       gameName == '' ? newGame.id = "Saved Game" : newGame.id = gameName;
       emit(state.copyWith(status: SaveLoadStatus.save, gameSave: newGame));
-      await hiveService.create(state.gameSave.toJson());
+      hiveService.create(state.gameSave.toJson());
       emit(state.copyWith(status: SaveLoadStatus.loaded));
     } catch (e) {
       _errorHandler("save game", e);
     }
   }
 
-  Future<void> fetchGames() async {
+  void fetchGames() async {
     emit(state.copyWith(status: SaveLoadStatus.loading));
     try {
       final rawData = await hiveService.readAll();
@@ -61,10 +61,10 @@ class SaveLoadCubit extends Cubit<SaveLoadState> {
     }
   }
 
-  Future<void> updateGame(int index) async {
+  void updateGame(int index)  {
     emit(state.copyWith(status: SaveLoadStatus.loading));
     try {
-      await hiveService.update(index, state.gameSave.toJson());
+       hiveService.update(index, state.gameSave.toJson());
       List<GameSave> newGames = state.games;
       newGames[index] = state.gameSave;
       emit(state.copyWith(status: SaveLoadStatus.loaded, games: newGames));
@@ -74,10 +74,10 @@ class SaveLoadCubit extends Cubit<SaveLoadState> {
     emit(state.copyWith(status: SaveLoadStatus.loaded));
   }
 
-  Future<void> deleteGame(int index) async {
+  void deleteGame(int index) {
     emit(state.copyWith(status: SaveLoadStatus.loading));
     try {
-      await hiveService.delete(index);
+      hiveService.delete(index);
       List<GameSave> games = state.games;
       games.removeAt(index);
       state.copyWith(status: SaveLoadStatus.loaded, games: games);
